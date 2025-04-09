@@ -37,6 +37,10 @@ namespace CrumbDBCS
 
                 return result;
             }
+            catch (Exception)
+            {
+                return [];
+            }
             finally
             {
                 _semaphore.Release();

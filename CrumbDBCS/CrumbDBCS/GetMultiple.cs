@@ -10,7 +10,7 @@ namespace CrumbDBCS
             await _semaphore.WaitAsync();
             try
             {
-                Dictionary<string,string> result = [];
+                Dictionary<string, string> result = [];
 
                 if (!Directory.Exists(dirname)) return result;
 
@@ -25,7 +25,7 @@ namespace CrumbDBCS
                 {
                     string content = await File.ReadAllTextAsync(filename, fileEncoding);
                     Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(content) ?? [];
-                    
+
                     if (dict.Count == 0)
                     {
                         string keyname = Path.GetFileNameWithoutExtension(filename);
@@ -39,6 +39,10 @@ namespace CrumbDBCS
                 }
 
                 return result;
+            }
+            catch (Exception)
+            {
+                return [];
             }
             finally
             {

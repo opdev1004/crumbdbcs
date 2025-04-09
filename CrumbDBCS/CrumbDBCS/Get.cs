@@ -22,6 +22,10 @@ namespace CrumbDBCS
 
                 return dict.GetValueOrDefault(keyname) ?? "";
             }
+            catch (Exception)
+            {
+                return "";
+            }
             finally
             {
                 _semaphore.Release();

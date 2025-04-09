@@ -5,7 +5,7 @@ namespace CrumbDBCS
 {
     public partial class CrumbDB
     {
-        public async Task Insert(string dirname, string keyname, string value, Encoding? encoding=null)
+        public async Task<bool> Insert(string dirname, string keyname, string value, Encoding? encoding=null)
         {
             await _semaphore.WaitAsync();
             try
@@ -15,6 +15,11 @@ namespace CrumbDBCS
                 Encoding fileEncoding = encoding ?? Encoding.UTF8;
                 string json = JsonSerializer.Serialize(new Dictionary<string, string> { { keyname, value } });
                 await File.WriteAllTextAsync(filename, json, fileEncoding);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
             finally
             {

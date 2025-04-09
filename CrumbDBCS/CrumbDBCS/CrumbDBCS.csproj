@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>CrumbDB</Title>
-    <Version>$(VersionPrefix)0.0.1</Version>
+    <Version>$(VersionPrefix)0.0.2</Version>
     <Authors>opdev1004</Authors>
     <Copyright>Copyright (c) 2025 Victor Chanil Park</Copyright>
     <PackageProjectUrl>https://github.com/opdev1004/crumbdbcs</PackageProjectUrl>
@@ -16,7 +16,7 @@
     <PackageTags>Data; DataStore; DataStorage; Database; File; Format; DB;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Description>Database based on JSON files in C#. CrumbDB is designed and built for solving a problem with data file size limits.</Description>
+    <Description>DBMS based on JSON files in C#. CrumbDB is designed and built for solving a problem with data file size limits.</Description>
   </PropertyGroup>
 
   <ItemGroup>

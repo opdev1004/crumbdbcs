@@ -17,6 +17,10 @@ namespace CrumbDBCS
                 File.Delete(filename);
                 return true;
             }
+            catch (Exception)
+            {
+                return false;
+            }
             finally
             {
                 _semaphore.Release();
