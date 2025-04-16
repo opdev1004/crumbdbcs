@@ -7,10 +7,12 @@ namespace CrumbDBCS
     {
         public async Task<bool> Remove(string dirname, string keyname)
         {
-            await _semaphore.WaitAsync();
+            string filename = Path.Combine(dirname, $"{keyname}.json");
+            SemaphoreSlim fileLock = GetFileLock(filename);
+            await fileLock.WaitAsync();
+
             try
             {
-                string filename = Path.Combine(dirname, $"{keyname}.json");
 
                 if (!File.Exists(filename)) return false;
 
@@ -23,7 +25,7 @@ namespace CrumbDBCS
             }
             finally
             {
-                _semaphore.Release();
+                fileLock.Release();
             }
         }
 

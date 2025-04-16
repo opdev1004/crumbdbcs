@@ -7,11 +7,12 @@ namespace CrumbDBCS
     {
         public async Task<string> Get(string dirname, string keyname, Encoding? encoding=null)
         {
-            await _semaphore.WaitAsync();
+            string filename = Path.Combine(dirname, $"{keyname}.json");
+            SemaphoreSlim fileLock = GetFileLock(filename);
+            await fileLock.WaitAsync();
+
             try
             {
-                string filename = Path.Combine(dirname, $"{keyname}.json");
-
                 if (!File.Exists(filename)) return "";
 
                 Encoding fileEncoding = encoding ?? Encoding.UTF8;
@@ -28,7 +29,7 @@ namespace CrumbDBCS
             }
             finally
             {
-                _semaphore.Release();
+                fileLock.Release();
             }
         }
 

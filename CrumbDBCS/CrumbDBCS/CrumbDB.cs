@@ -2,6 +2,7 @@
 {
     public partial class CrumbDB
     {
-        private readonly SemaphoreSlim _semaphore = new(1, 1);
+        private static readonly Dictionary<string, SemaphoreSlim> _fileLocks = new();
+        private static readonly object _fileLocksLock = new();
     }
 }

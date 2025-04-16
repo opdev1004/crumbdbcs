@@ -7,11 +7,13 @@ namespace CrumbDBCS
     {
         public async Task<bool> Insert(string dirname, string keyname, string value, Encoding? encoding=null)
         {
-            await _semaphore.WaitAsync();
+            Directory.CreateDirectory(dirname);
+            string filename = Path.Combine(dirname, $"{keyname}.json");
+            SemaphoreSlim fileLock = GetFileLock(filename);
+            await fileLock.WaitAsync();
+
             try
             {
-                Directory.CreateDirectory(dirname);
-                string filename = Path.Combine(dirname, $"{keyname}.json");
                 Encoding fileEncoding = encoding ?? Encoding.UTF8;
                 string json = JsonSerializer.Serialize(new Dictionary<string, string> { { keyname, value } });
                 await File.WriteAllTextAsync(filename, json, fileEncoding);
@@ -23,7 +25,7 @@ namespace CrumbDBCS
             }
             finally
             {
-                _semaphore.Release();
+                fileLock.Release();
             }
         }
 

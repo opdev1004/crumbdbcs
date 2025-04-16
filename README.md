@@ -3,9 +3,9 @@ DBMS based on JSON files in C#. CrumbDB is designed and built for solving a prob
 
 ## 👨‍🏫 Notice
 
-### 🎉 Releasing version 0.0.2
+### 🎉 Releasing version 0.1.0
 PLEASE USE THE LATEST VERSION.
-- Updated return value and error handling from each function.
+- Updated lock to file based lock.
 
 ### 📢 Note
 - Support dotNet 8 and 9. Dotnet 8 is going to be supported until it is no longer compatible with the newest version of dotnet.

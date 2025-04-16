@@ -7,7 +7,6 @@ namespace CrumbDBCS
     {
         public async Task<Dictionary<string, string>> GetAll(string dirname, Encoding encoding)
         {
-            await _semaphore.WaitAsync();
             try
             {
                 Dictionary<string, string> result = [];
@@ -20,18 +19,32 @@ namespace CrumbDBCS
 
                 foreach (string filename in filenames)
                 {
-                    string content = await File.ReadAllTextAsync(filename, fileEncoding);
-                    Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(content) ?? [];
+                    SemaphoreSlim fileLock = GetFileLock(filename);
+                    await fileLock.WaitAsync();
+                    try
+                    {
+                        string content = await File.ReadAllTextAsync(filename, fileEncoding);
+                        Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(content) ?? [];
 
-                    if (dict.Count == 0)
+                        if (dict.Count == 0)
+                        {
+                            string keyname = Path.GetFileNameWithoutExtension(filename);
+                            result[keyname] = "";
+                        }
+                        else
+                        {
+                            foreach (KeyValuePair<string, string> kvp in dict)
+                                result[kvp.Key] = kvp.Value;
+                        }
+                    }
+                    catch (Exception)
                     {
                         string keyname = Path.GetFileNameWithoutExtension(filename);
                         result[keyname] = "";
                     }
-                    else
+                    finally
                     {
-                        foreach (KeyValuePair<string, string> kvp in dict)
-                            result[kvp.Key] = kvp.Value;
+                        fileLock.Release();
                     }
                 }
 
@@ -40,10 +53,6 @@ namespace CrumbDBCS
             catch (Exception)
             {
                 return [];
-            }
-            finally
-            {
-                _semaphore.Release();
             }
         }
 
