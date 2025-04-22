@@ -5,7 +5,7 @@ namespace CrumbDBCS
 {
     public partial class CrumbDB
     {
-        public async Task<Dictionary<string, string>> GetMultiple(string dirname, int position, int count, Encoding encoding)
+        public async Task<Dictionary<string, string>> GetMultiple(string dirname, int position, int count, Encoding? encoding = null)
         {
             try
             {
@@ -27,23 +27,13 @@ namespace CrumbDBCS
                     try
                     {
                         string content = await File.ReadAllTextAsync(filename, fileEncoding);
-                        Dictionary<string, string> dict = JsonSerializer.Deserialize<Dictionary<string, string>>(content) ?? [];
-
-                        if (dict.Count == 0)
-                        {
-                            string keyname = Path.GetFileNameWithoutExtension(filename);
-                            result[keyname] = "";
-                        }
-                        else
-                        {
-                            foreach (KeyValuePair<string, string> kvp in dict)
-                                result[kvp.Key] = kvp.Value;
-                        }
+                        string documentname = Path.GetFileNameWithoutExtension(filename);
+                        result[documentname] = content;
                     }
                     catch (Exception)
                     {
-                        string keyname = Path.GetFileNameWithoutExtension(filename);
-                        result[keyname] = "";
+                        string documentname = Path.GetFileNameWithoutExtension(filename);
+                        result[documentname] = "";
                     }
                     finally
                     {
@@ -59,5 +49,50 @@ namespace CrumbDBCS
             }
         }
 
+
+        public async Task<Dictionary<string, string>> GetMultiple(string dirname, string databasename, string collectionname, int position, int count, Encoding? encoding = null)
+        {
+            try
+            {
+                string documentDirname = Path.Combine(dirname, databasename, collectionname);
+                Dictionary<string, string> result = [];
+
+                if (!Directory.Exists(documentDirname)) return result;
+
+                Encoding fileEncoding = encoding ?? Encoding.UTF8;
+
+                IEnumerable<string> filenames = Directory.GetFiles(documentDirname, "*.json")
+                                                     .OrderBy(f => f)
+                                                     .Skip(position)
+                                                     .Take(count);
+
+                foreach (string filename in filenames)
+                {
+                    SemaphoreSlim fileLock = GetFileLock(filename);
+                    await fileLock.WaitAsync();
+                    try
+                    {
+                        string content = await File.ReadAllTextAsync(filename, fileEncoding);
+                        string documentname = Path.GetFileNameWithoutExtension(filename);
+                        result[documentname] = content;
+                    }
+                    catch (Exception)
+                    {
+                        string documentname = Path.GetFileNameWithoutExtension(filename);
+                        result[documentname] = "";
+                    }
+                    finally
+                    {
+                        fileLock.Release();
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return [];
+            }
+        }
     }
 }

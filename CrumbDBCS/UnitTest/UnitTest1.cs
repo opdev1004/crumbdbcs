@@ -4,7 +4,7 @@ using System.Text;
 namespace UnitTest
 {
     [TestFixture]
-    public class CrumbDBTests
+    public partial class CrumbDBTests
     {
         private string _testDir = Path.Combine(Path.GetTempPath(), "CrumbDB_Test");
         private CrumbDB _db;

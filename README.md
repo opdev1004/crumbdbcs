@@ -1,11 +1,12 @@
 # 🥇 CrumbDB CS
-DBMS based on JSON files in C#. CrumbDB is designed and built for solving a problem with data file size limits.
+Document DBMS in C#. CrumbDB is designed and built for solving a problem with data file size limits.
 
 ## 👨‍🏫 Notice
 
-### 🎉 Releasing version 0.1.0
+### 🎉 Releasing version 0.2.0
 PLEASE USE THE LATEST VERSION.
-- Updated lock to file based lock.
+- Added document db structured functions.
+- Now store string data value instead of assigning the data value to document name and convert that to string. Requires migration.
 
 ### 📢 Note
 - Support dotNet 8 and 9. Dotnet 8 is going to be supported until it is no longer compatible with the newest version of dotnet.
