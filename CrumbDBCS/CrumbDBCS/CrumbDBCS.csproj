@@ -6,14 +6,14 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>CrumbDB</Title>
-    <Version>$(VersionPrefix)0.2.0</Version>
+    <Version>$(VersionPrefix)0.3.0</Version>
     <Authors>opdev1004</Authors>
     <Copyright>Copyright (c) 2025 Victor Chanil Park</Copyright>
     <PackageProjectUrl>https://github.com/opdev1004/crumbdbcs</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/opdev1004/crumbdbcs</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Data; DataStore; DataStorage; Database; File; Format; DB;</PackageTags>
+    <PackageTags>Data; DataStore; DataStorage; Database; File; DocumentDB; DB; NoSQL;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Description>Document DBMS in C#. CrumbDB is designed and built for solving a problem with data file size limits.</Description>

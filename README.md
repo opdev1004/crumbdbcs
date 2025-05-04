@@ -1,12 +1,11 @@
 # 🥇 CrumbDB CS
-Document DBMS in C#. CrumbDB is designed and built for solving a problem with data file size limits.
+NoSQL Document DBMS in C#. CrumbDB is designed and built for solving a problem with data file size limits.
 
 ## 👨‍🏫 Notice
 
-### 🎉 Releasing version 0.2.0
+### 🎉 Releasing version 0.3.0
 PLEASE USE THE LATEST VERSION.
-- Added document db structured functions.
-- Now store string data value instead of assigning the data value to document name and convert that to string. Requires migration.
+- Added backup function that works with the file locker.
 
 ### 📢 Note
 - Support dotNet 8 and 9. Dotnet 8 is going to be supported until it is no longer compatible with the newest version of dotnet.

@@ -54,14 +54,14 @@ namespace CrumbDBCS
         {
             try
             {
-                string documentDirname = Path.Combine(dirname, databasename, collectionname);
+                string collectionDirname = Path.Combine(dirname, databasename, collectionname);
                 Dictionary<string, string> result = [];
 
-                if (!Directory.Exists(documentDirname)) return result;
+                if (!Directory.Exists(collectionDirname)) return result;
 
                 Encoding fileEncoding = encoding ?? Encoding.UTF8;
 
-                IEnumerable<string> filenames = Directory.GetFiles(documentDirname, "*.json")
+                IEnumerable<string> filenames = Directory.GetFiles(collectionDirname, "*.json")
                                                      .OrderBy(f => f)
                                                      .Skip(position)
                                                      .Take(count);
