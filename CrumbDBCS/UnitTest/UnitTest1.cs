@@ -26,7 +26,7 @@ namespace UnitTest
         [Test]
         public async Task Insert_And_Get_ReturnsInsertedValue()
         {
-            await _db.Insert(_testDir, "testkey", "testvalue");
+            await _db.Add(_testDir, "testkey", "testvalue");
             string result = await _db.Get(_testDir, "testkey");
             Assert.That("testvalue".Equals(result), Is.True);
         }
@@ -41,7 +41,7 @@ namespace UnitTest
         [Test]
         public async Task Remove_ExistingFile_ReturnsTrue()
         {
-            await _db.Insert(_testDir, "toremove", "value");
+            await _db.Add(_testDir, "toremove", "value");
             bool removed = await _db.Remove(_testDir, "toremove");
             Assert.That(removed, Is.True);
         }
@@ -56,8 +56,8 @@ namespace UnitTest
         [Test]
         public async Task GetAll_ReturnsAllKeyValuePairs()
         {
-            await _db.Insert(_testDir, "key1", "val1");
-            await _db.Insert(_testDir, "key2", "val2");
+            await _db.Add(_testDir, "key1", "val1");
+            await _db.Add(_testDir, "key2", "val2");
             Dictionary<string, string> result = await _db.GetAll(_testDir, Encoding.UTF8);
 
             Assert.That(2 == result.Count, Is.True);
@@ -70,7 +70,7 @@ namespace UnitTest
         {
             for (int i = 0; i < 5; i++)
             {
-                await _db.Insert(_testDir, $"key{i}", $"val{i}");
+                await _db.Add(_testDir, $"key{i}", $"val{i}");
             }
 
             Dictionary<string, string> result = await _db.GetMultiple(_testDir, 1, 3, Encoding.UTF8);
