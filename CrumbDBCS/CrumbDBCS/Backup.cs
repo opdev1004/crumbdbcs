@@ -17,7 +17,9 @@ namespace CrumbDBCS
                 {
                     SemaphoreSlim fileLock = GetFileLock(filepath);
                     await fileLock.WaitAsync();
-                    try
+					await IOSemaphore.WaitAsync();
+
+					try
                     {
                         string relativePath = Path.GetRelativePath(sourceDir, filepath);
                         string fileContent = await File.ReadAllTextAsync(filepath);
@@ -28,6 +30,7 @@ namespace CrumbDBCS
                     }
                     finally
                     {
+                        IOSemaphore.Release();
                         fileLock.Release();
                     }
                 }

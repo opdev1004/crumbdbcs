@@ -10,8 +10,9 @@ namespace CrumbDBCS
             string filename = Path.Combine(dirname, $"{documentname}.json");
             SemaphoreSlim fileLock = GetFileLock(filename);
             await fileLock.WaitAsync();
+			await IOSemaphore.WaitAsync();
 
-            try
+			try
             {
 
                 if (!File.Exists(filename)) return false;
@@ -25,6 +26,7 @@ namespace CrumbDBCS
             }
             finally
             {
+                IOSemaphore.Release();
                 fileLock.Release();
             }
         }
@@ -36,7 +38,9 @@ namespace CrumbDBCS
             string filename = Path.Combine(collectionDirname, $"{documentname}.json");
             SemaphoreSlim fileLock = GetFileLock(filename);
             await fileLock.WaitAsync();
-            try
+			await IOSemaphore.WaitAsync();
+
+			try
             {
                 if (!File.Exists(filename)) return false;
                 File.Delete(filename);
@@ -48,6 +52,7 @@ namespace CrumbDBCS
             }
             finally
             {
+                IOSemaphore.Release();
                 fileLock.Release();
             }
         }

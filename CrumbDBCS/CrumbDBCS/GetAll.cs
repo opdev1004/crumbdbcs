@@ -21,7 +21,9 @@ namespace CrumbDBCS
                 {
                     SemaphoreSlim fileLock = GetFileLock(filename);
                     await fileLock.WaitAsync();
-                    try
+					await IOSemaphore.WaitAsync();
+
+					try
                     {
                         string content = await File.ReadAllTextAsync(filename, fileEncoding);
                         string documentname = Path.GetFileNameWithoutExtension(filename);
@@ -34,6 +36,7 @@ namespace CrumbDBCS
                     }
                     finally
                     {
+                        IOSemaphore.Release();
                         fileLock.Release();
                     }
                 }
@@ -64,7 +67,9 @@ namespace CrumbDBCS
                 {
                     SemaphoreSlim fileLock = GetFileLock(filename);
                     await fileLock.WaitAsync();
-                    try
+					await IOSemaphore.WaitAsync();
+
+					try
                     {
                         string content = await File.ReadAllTextAsync(filename, fileEncoding);
                         string documentname = Path.GetFileNameWithoutExtension(filename);
@@ -77,6 +82,7 @@ namespace CrumbDBCS
                     }
                     finally
                     {
+                        IOSemaphore.Release();
                         fileLock.Release();
                     }
                 }

@@ -9,8 +9,9 @@ namespace CrumbDBCS
             string filename = Path.Combine(dirname, $"{documentname}.json");
             SemaphoreSlim fileLock = GetFileLock(filename);
             await fileLock.WaitAsync();
+            await IOSemaphore.WaitAsync();
 
-            try
+			try
             {
                 Directory.CreateDirectory(dirname);
 
@@ -26,8 +27,9 @@ namespace CrumbDBCS
             }
             finally
             {
-                fileLock.Release();
-            }
+				IOSemaphore.Release();
+				fileLock.Release();
+			}
         }
 
         public async Task<bool> Add(string dirname, string databasename, string collectionname, string documentname, string value, Encoding? encoding = null)
@@ -36,8 +38,9 @@ namespace CrumbDBCS
             string filename = Path.Combine(collectionDirname, $"{documentname}.json");
             SemaphoreSlim fileLock = GetFileLock(filename);
             await fileLock.WaitAsync();
+			await IOSemaphore.WaitAsync();
 
-            try
+			try
             {
                 Directory.CreateDirectory(collectionDirname);
 
@@ -53,7 +56,8 @@ namespace CrumbDBCS
             }
             finally
             {
-                fileLock.Release();
+				IOSemaphore.Release();
+				fileLock.Release();
             }
         }
 

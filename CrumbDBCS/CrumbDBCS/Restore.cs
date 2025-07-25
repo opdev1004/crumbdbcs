@@ -25,8 +25,9 @@ namespace CrumbDBCS
 
                     SemaphoreSlim fileLock = GetFileLock(destPath);
                     await fileLock.WaitAsync();
+					await IOSemaphore.WaitAsync();
 
-                    try
+					try
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(destPath)!);
 
@@ -36,6 +37,7 @@ namespace CrumbDBCS
                     }
                     finally
                     {
+                        IOSemaphore.Release();
                         fileLock.Release();
                     }
                 }

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>CrumbDB</Title>
-    <Version>$(VersionPrefix)0.4.0</Version>
+    <Version>$(VersionPrefix)0.5.0</Version>
     <Authors>opdev1004</Authors>
     <Copyright>Copyright (c) 2025 Victor Chanil Park</Copyright>
     <PackageProjectUrl>https://github.com/opdev1004/crumbdbcs</PackageProjectUrl>
