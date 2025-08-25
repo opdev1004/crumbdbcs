@@ -6,7 +6,7 @@ namespace CrumbDBCS
 {
     public partial class CrumbDB
     {
-        public async Task<MultipleData> GetMultiple(string dirname, string databasename, string collectionname, int position, int count, Encoding? encoding = null)
+        public async Task<MultipleData> GetMultipleByKeywords(string dirname, string databasename, string collectionname, List<string> keywords, int position, int count, Encoding? encoding = null)
         {
 			MultipleData result = new();
 
@@ -35,6 +35,10 @@ namespace CrumbDBCS
 						if (seen++ < position) continue;
 
 						string filename = enumerator.Current;
+						string basename = Path.GetFileNameWithoutExtension(filename);
+
+						if (!keywords.Any(k => !string.IsNullOrEmpty(k) && basename.Contains(k, StringComparison.OrdinalIgnoreCase))) continue;
+
 						filenames.Add(filename);
 
 						if (++taken >= count)

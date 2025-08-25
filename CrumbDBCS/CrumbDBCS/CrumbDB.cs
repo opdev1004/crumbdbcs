@@ -2,7 +2,7 @@
 {
     public partial class CrumbDB
     {
-        private Dictionary<string, SemaphoreSlim> _fileLocks = new();
+        private Dictionary<string, SemaphoreSlim> _fileLocks = [];
         private object _fileLocksLock = new();
 		private SemaphoreSlim IOSemaphore;
 

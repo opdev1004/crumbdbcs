@@ -2,13 +2,13 @@
 NoSQL Document DBMS in C#. Crumbdb CS is a minimalistic JSON database library that stores documents as individual JSON files. It supports safe concurrent access using async file locking and includes optional backup functionality via ZIP compression. CrumbDB is designed and built for solving a problem with data file size limits.
 
 ## 👨‍🏫 Notice
-### ⚠️ From version 0.5.0, you need to create an instance of CrumbDB
-Because every OS has different maximum size of opened file per process. We had to change the design of crumb db.
-Make it global object that for safe DB operation batching.
 
-### 🎉 Releasing version 0.5.0
+### 🎉 Releasing version 0.7.0
 PLEASE USE THE LATEST VERSION.
-- Added number of file descriptor limit and batching system. The default is 512.
+- Upgraded `getMultiple()`, now it returns `MultipleData` Class.
+- Added `getMultipleByKeyword()` and `getMultipleByKeywords()`
+- Functions that requires only full directory path are removed.
+- Fixed algorithm for `getMultiple`, `getMultipleByKeyword()` and `getMultipleByKeywords()`
 
 ### 📢 Note
 - Support dotNet 8 and 9. Dotnet 8 is going to be supported until it is no longer compatible with the newest version of dotnet.

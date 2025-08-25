@@ -5,33 +5,6 @@ namespace CrumbDBCS
 {
     public partial class CrumbDB
     {
-        public async Task<bool> Remove(string dirname, string documentname)
-        {
-            string filename = Path.Combine(dirname, $"{documentname}.json");
-            SemaphoreSlim fileLock = GetFileLock(filename);
-            await fileLock.WaitAsync();
-			await IOSemaphore.WaitAsync();
-
-			try
-            {
-
-                if (!File.Exists(filename)) return false;
-
-                File.Delete(filename);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            finally
-            {
-                IOSemaphore.Release();
-                fileLock.Release();
-            }
-        }
-
-
         public async Task<bool> Remove(string dirname, string databasename, string collectionname, string documentname)
         {
             string collectionDirname = Path.Combine(dirname, databasename, collectionname);
